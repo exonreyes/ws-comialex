@@ -22,6 +22,7 @@ public class ObtenerUnidadContactoService implements ObtenerContacto {
         if (!unidad.getContacto().getEstado()) {
             throw new EntityException("No se encontro algun contacto activo, sin embargo la unidad tiene un registro historico inactivo", null, 404);
         }
+        unidad.getContacto().setEstado(null);
         return unidad;
     }
 }
