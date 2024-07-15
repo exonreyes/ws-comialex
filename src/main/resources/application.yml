@@ -22,7 +22,7 @@ spring:
     properties:
       hibernate:
         default_schema: nova
-        format_sql: true
+#        format_sql: true
     show-sql: true
   application:
     name: comialex
