@@ -31,7 +31,7 @@ public class TicketPersistenceAdapter implements ObtenerTicketsPort {
         Page<TicketInfo> pagina = jpaRepository.buscarTickets(f.getIdUnidad(), f.getIdArea(), f.getIdEstado(), f.getDesde(), f.getHasta(), f.getFolio(), pageable);
 
         // Convertir página de TicketInfo a una lista de Ticket usando parallelStream y TicketMapper
-        List<Ticket> tickets = pagina.getContent().parallelStream()
+        List<Ticket> tickets = pagina.stream().parallel()
                 .map(TicketMapper::map)
                 .collect(Collectors.toList());
 
