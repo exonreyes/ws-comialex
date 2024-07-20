@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public interface TicketJpaRepository extends JpaRepository<TicketEntity, Integer> {
     /**
@@ -26,4 +27,11 @@ public interface TicketJpaRepository extends JpaRepository<TicketEntity, Integer
     @EntityGraph(attributePaths = {"unidad", "reporte.area", "estado"})
     @Query("select t.id as id,t.fecha as fecha, t.folio as folio,t.unidad.id  as unidadId,t.unidad.clave as unidadClave,t.unidad.nombre as unidadNombre, t.reporte as reporte,t.estado as estado from TicketEntity t where (:id_unidad IS NULL OR t.unidad.id = :id_unidad) and (:id_area IS NULL OR t.reporte.area.id = :id_area) and (:id_estado IS NULL OR t.estado.id = :id_estado) and(:desde IS NULL OR t.fecha >= :desde) and(:hasta IS NULL OR t.fecha <= :hasta) and (:folio IS NULL OR t.folio = :folio)  and t.visible = true")
     Page<TicketInfo> buscarTickets(@Param("id_unidad") Integer id_unidad, Integer id_area, Integer id_estado, LocalDateTime desde, LocalDateTime hasta, String folio, Pageable pageable);
+
+    @EntityGraph(attributePaths = {"reporte.area"})
+    <T>
+    Optional<T> findByFolioAndVisibleTrue(String folio, Class<T> type);
+
+    boolean existsByFolioAndVisibleTrue(String folio);
+
 }

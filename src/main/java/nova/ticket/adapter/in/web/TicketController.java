@@ -2,6 +2,9 @@ package nova.ticket.adapter.in.web;
 
 import nova.common.DataPaginado;
 import nova.common.NovaResponse;
+import nova.ticket.application.port.in.ExisteFolio;
+import nova.ticket.application.port.in.ObtenerTicketDetalles;
+import nova.ticket.application.port.in.ObtenerTicketFolio;
 import nova.ticket.application.port.in.ObtenerTickets;
 import nova.ticket.domain.model.Filtro;
 import nova.ticket.domain.model.Ticket;
@@ -19,10 +22,13 @@ import java.util.Optional;
 @RequestMapping("ticket")
 public class TicketController {
     private final ObtenerTickets tickets;
-
+    private final ObtenerTicketFolio ticketFolio;
+    private final ObtenerTicketDetalles ticketDetalles;
     @Autowired
-    public TicketController(ObtenerTickets tickets) {
+    public TicketController(ObtenerTickets tickets, ObtenerTicketFolio ticketFolio, ObtenerTicketDetalles ticketDetalles, ExisteFolio existeFolio) {
         this.tickets = tickets;
+        this.ticketFolio = ticketFolio;
+        this.ticketDetalles = ticketDetalles;
     }
 
     @GetMapping("tickets")
@@ -38,5 +44,15 @@ public class TicketController {
         Optional.ofNullable(hasta).ifPresent(filtro::setHasta);
         DataPaginado<Ticket> paginado = this.tickets.obtener(filtro);
         return ResponseEntity.ok(NovaResponse.builder().data(paginado.getData()).paginador(paginado.getPaginador()).status(200).build());
+    }
+
+    @GetMapping("ticket")
+    public ResponseEntity<NovaResponse> obtenerTicket(@RequestParam("folio") String folio) {
+        return ResponseEntity.ok(NovaResponse.builder().data(ticketFolio.obtener(folio)).status(200).build());
+    }
+
+    @GetMapping("detalles")
+    public ResponseEntity<NovaResponse> obtenerDetalles(@RequestParam("folio") String folio) {
+        return ResponseEntity.ok(NovaResponse.builder().data(ticketDetalles.obtener(folio)).status(200).build());
     }
 }

@@ -9,11 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ObtenerTicketsService implements ObtenerTickets {
+public class TicketsService implements ObtenerTickets {
     private final ObtenerTicketsPort port;
-
     @Autowired
-    public ObtenerTicketsService(ObtenerTicketsPort port) {
+    public TicketsService(ObtenerTicketsPort port) {
         this.port = port;
     }
 

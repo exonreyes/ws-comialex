@@ -12,15 +12,11 @@ public interface TicketInfo {
 
     LocalDateTime getFecha();
 
-    String getAgente();
-
     Integer getUnidadId();
 
     String getUnidadClave();
 
     String getUnidadNombre();
-
-    String getNota();
 
     ReporteInfo getReporte();
 

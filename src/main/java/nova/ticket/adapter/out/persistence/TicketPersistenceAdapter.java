@@ -2,7 +2,12 @@ package nova.ticket.adapter.out.persistence;
 
 import nova.common.DataPaginado;
 import nova.common.Paginador;
+import nova.common.exception.EntityException;
+import nova.ticket.adapter.out.persistence.projection.TicketDetallesInfo;
 import nova.ticket.adapter.out.persistence.projection.TicketInfo;
+import nova.ticket.application.port.out.ExisteFolioPort;
+import nova.ticket.application.port.out.ObtenerDetallesPort;
+import nova.ticket.application.port.out.ObtenerTicketFolioPort;
 import nova.ticket.application.port.out.ObtenerTicketsPort;
 import nova.ticket.domain.model.Filtro;
 import nova.ticket.domain.model.Ticket;
@@ -14,10 +19,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-public class TicketPersistenceAdapter implements ObtenerTicketsPort {
+public class TicketPersistenceAdapter implements ObtenerTicketsPort, ObtenerTicketFolioPort, ObtenerDetallesPort, ExisteFolioPort {
     private final TicketJpaRepository jpaRepository;
 
     @Autowired
@@ -41,5 +47,24 @@ public class TicketPersistenceAdapter implements ObtenerTicketsPort {
         p.setTotalRegistros(pagina.getTotalElements());
 
         return new DataPaginado<>(tickets, p);
+    }
+
+    @Override
+    public Ticket obtenerTicketFolio(String folio) {
+        Optional<TicketInfo> ticket = jpaRepository.findByFolioAndVisibleTrue(folio, TicketInfo.class);
+        TicketInfo ticketInfo = ticket.orElseThrow(() -> new EntityException("El folio a consultar no existe", null, 404));
+        return TicketMapper.map(ticketInfo);
+    }
+
+    @Override
+    public Ticket obtenerDetalles(String folio) {
+        Optional<TicketDetallesInfo> detalles = jpaRepository.findByFolioAndVisibleTrue(folio, TicketDetallesInfo.class);
+        TicketDetallesInfo detallesInfo = detalles.orElseThrow(() -> new EntityException("El folio a consultar no existe", null, 404));
+        return TicketMapper.mapDetalles(detallesInfo);
+    }
+
+    @Override
+    public Boolean existeFolio(String folio) {
+        return jpaRepository.existsByFolioAndVisibleTrue(folio);
     }
 }
