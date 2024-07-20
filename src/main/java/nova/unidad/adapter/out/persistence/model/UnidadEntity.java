@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -28,5 +30,8 @@ public class UnidadEntity {
 
     @OneToOne(mappedBy = "unidad")
     private UnidadContactoEntity contacto;
+
+    @OneToMany(mappedBy = "unidad")
+    private List<HorarioEntity> horarios;
 
 }

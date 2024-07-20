@@ -2,6 +2,7 @@ package nova.unidad.adapter.in.web;
 
 import nova.common.NovaResponse;
 import nova.unidad.application.port.in.ObtenerContacto;
+import nova.unidad.application.port.in.ObtenerHorario;
 import nova.unidad.application.port.in.ObtenerUnidadId;
 import nova.unidad.application.port.in.ObtenerUnidades;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,13 @@ public class UnidadController {
     private final ObtenerUnidades unidades;
     private final ObtenerUnidadId unidad;
     private final ObtenerContacto contacto;
-
+    private final ObtenerHorario horario;
     @Autowired
-    public UnidadController(ObtenerUnidades unidades, ObtenerUnidadId unidad, ObtenerContacto contacto) {
+    public UnidadController(ObtenerUnidades unidades, ObtenerUnidadId unidad, ObtenerContacto contacto, ObtenerHorario horario) {
         this.unidades = unidades;
         this.unidad = unidad;
         this.contacto = contacto;
+        this.horario = horario;
     }
 
     @GetMapping("unidades")
@@ -38,5 +40,10 @@ public class UnidadController {
     @GetMapping("contacto")
     public ResponseEntity<NovaResponse> obtenerContacto(@RequestParam("id") Integer id) {
         return ResponseEntity.ok(NovaResponse.builder().data(contacto.obtener(id)).status(200).build());
+    }
+
+    @GetMapping("horario")
+    public ResponseEntity<NovaResponse> obtenerHorario(@RequestParam("id") Integer id) {
+        return ResponseEntity.ok(NovaResponse.builder().data(horario.obtener(id)).status(200).build());
     }
 }
