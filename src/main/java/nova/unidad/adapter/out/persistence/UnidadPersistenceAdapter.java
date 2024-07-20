@@ -1,6 +1,8 @@
 package nova.unidad.adapter.out.persistence;
 
 import nova.common.exception.EntityException;
+import nova.horario.domain.model.Horario;
+import nova.horario.domain.model.Operatividad;
 import nova.unidad.adapter.out.persistence.projection.UnidadContactoInfo;
 import nova.unidad.adapter.out.persistence.projection.UnidadHorarioInfo;
 import nova.unidad.adapter.out.persistence.projection.UnidadInfo;
@@ -8,13 +10,10 @@ import nova.unidad.application.port.out.ObtenerContactoPort;
 import nova.unidad.application.port.out.ObtenerHorarioPort;
 import nova.unidad.application.port.out.ObtenerUnidadIdPort;
 import nova.unidad.application.port.out.ObtenerUnidadesPort;
-import nova.horario.domain.model.Horario;
-import nova.horario.domain.model.Operatividad;
 import nova.unidad.domain.model.Unidad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +48,7 @@ public class UnidadPersistenceAdapter implements ObtenerUnidadesPort, ObtenerUni
     @Override
     public Unidad obtenerHorario(Integer id) {
         Unidad unidadResult = new Unidad();
-        List<Horario> horarios = new ArrayList<>();
+        List<Horario> horarios;
 
         UnidadHorarioInfo unidad = jpaRepository.findByHorarios_Unidad_Id(id).orElseThrow(() -> new EntityException("Unidad no encontrada", null, 404));
         unidadResult.setNombre(unidad.getNombre());
