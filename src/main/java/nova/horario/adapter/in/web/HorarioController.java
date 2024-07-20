@@ -1,4 +1,4 @@
-package nova.horario.adapter.in;
+package nova.horario.adapter.in.web;
 
 import nova.common.NovaResponse;
 import nova.horario.application.port.in.ObtenerHorarios;
