@@ -6,16 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalTime;
+import java.util.List;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Horario implements Serializable {
-    private Integer id;
+public class Atencion implements Serializable {
     private Operatividad operatividad;
-    private LocalTime apertura;
-    private LocalTime cierre;
-    private Boolean activo;
+    private List<UnidadHorario> horarios;
 }
