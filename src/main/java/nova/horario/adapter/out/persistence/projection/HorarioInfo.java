@@ -1,4 +1,4 @@
-package nova.unidad.adapter.out.persistence.projection;
+package nova.horario.adapter.out.persistence.projection;
 
 import java.time.LocalTime;
 

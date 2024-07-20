@@ -1,4 +1,4 @@
-package nova.unidad.adapter.out.persistence.model;
+package nova.horario.adapter.out.persistence.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;

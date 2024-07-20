@@ -1,9 +1,10 @@
-package nova.unidad.adapter.out.persistence.model;
+package nova.horario.adapter.out.persistence.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import nova.unidad.adapter.out.persistence.model.UnidadEntity;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalTime;
