@@ -1,8 +1,9 @@
-package nova.unidad.domain.model;
+package nova.horario.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import nova.unidad.domain.model.Unidad;
 
 import java.io.Serializable;
 import java.time.LocalTime;

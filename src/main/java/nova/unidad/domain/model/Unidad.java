@@ -2,6 +2,7 @@ package nova.unidad.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import nova.horario.domain.model.Horario;
 
 import java.io.Serializable;
 import java.util.List;
