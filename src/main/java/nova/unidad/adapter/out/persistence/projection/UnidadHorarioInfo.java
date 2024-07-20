@@ -1,5 +1,7 @@
 package nova.unidad.adapter.out.persistence.projection;
 
+import nova.horario.adapter.out.persistence.projection.HorarioInfo;
+
 import java.util.List;
 
 /**
