@@ -2,18 +2,12 @@ package nova.ticket.adapter.in.web;
 
 import nova.common.DataPaginado;
 import nova.common.NovaResponse;
-import nova.ticket.application.port.in.ExisteFolio;
-import nova.ticket.application.port.in.ObtenerTicketDetalles;
-import nova.ticket.application.port.in.ObtenerTicketFolio;
-import nova.ticket.application.port.in.ObtenerTickets;
+import nova.ticket.application.port.in.*;
 import nova.ticket.domain.model.Filtro;
 import nova.ticket.domain.model.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -24,11 +18,13 @@ public class TicketController {
     private final ObtenerTickets tickets;
     private final ObtenerTicketFolio ticketFolio;
     private final ObtenerTicketDetalles ticketDetalles;
+    private final EliminarTicket eliminarTicket;
     @Autowired
-    public TicketController(ObtenerTickets tickets, ObtenerTicketFolio ticketFolio, ObtenerTicketDetalles ticketDetalles, ExisteFolio existeFolio) {
+    public TicketController(ObtenerTickets tickets, ObtenerTicketFolio ticketFolio, ObtenerTicketDetalles ticketDetalles, ExisteFolio existeFolio, EliminarTicket eliminarTicket) {
         this.tickets = tickets;
         this.ticketFolio = ticketFolio;
         this.ticketDetalles = ticketDetalles;
+        this.eliminarTicket = eliminarTicket;
     }
 
     @GetMapping("tickets")
@@ -43,7 +39,8 @@ public class TicketController {
         Optional.ofNullable(desde).ifPresent(filtro::setDesde);
         Optional.ofNullable(hasta).ifPresent(filtro::setHasta);
         DataPaginado<Ticket> paginado = this.tickets.obtener(filtro);
-        return ResponseEntity.ok(NovaResponse.builder().data(paginado.getData()).paginador(paginado.getPaginador()).status(200).build());
+
+        return ResponseEntity.ok(NovaResponse.builder().message(paginado.getPaginador().getFilas() > 0 ? null : "Sin resultados").data(paginado.getData()).paginador(paginado.getPaginador()).status(200).build());
     }
 
     @GetMapping("ticket")
@@ -54,5 +51,15 @@ public class TicketController {
     @GetMapping("detalles")
     public ResponseEntity<NovaResponse> obtenerDetalles(@RequestParam("folio") String folio) {
         return ResponseEntity.ok(NovaResponse.builder().data(ticketDetalles.obtener(folio)).status(200).build());
+    }
+
+    @DeleteMapping("ticket")
+    public ResponseEntity<NovaResponse> eliminarTicket(@RequestParam("folio") String folio) {
+        if (eliminarTicket.eliminar(folio)) {
+            return ResponseEntity.ok(NovaResponse.builder().message("Ticket eliminado").status(200).build());
+        } else {
+            return ResponseEntity.ok(NovaResponse.builder().message("Ticket eliminado").status(200).build());
+        }
+
     }
 }

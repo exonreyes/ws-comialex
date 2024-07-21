@@ -6,8 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -33,5 +35,10 @@ public interface TicketJpaRepository extends JpaRepository<TicketEntity, Integer
     Optional<T> findByFolioAndVisibleTrue(String folio, Class<T> type);
 
     boolean existsByFolioAndVisibleTrue(String folio);
+
+    @Transactional
+    @Modifying
+    @Query("update TicketEntity t set t.visible = false where t.folio = ?1")
+    int updateVisibleByFolio(String folio);
 
 }

@@ -6,13 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FolioService implements ExisteFolio {
-    private final ExisteFolioPort port;
-
+public class ExisteFolioService implements ExisteFolio {
     @Autowired
-    public FolioService(ExisteFolioPort port) {
-        this.port = port;
-    }
+    private ExisteFolioPort port;
 
     @Override
     public Boolean verificar(String folio) {
