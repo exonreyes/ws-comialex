@@ -2,7 +2,10 @@ package nova.ticket.adapter.in.web;
 
 import nova.common.DataPaginado;
 import nova.common.NovaResponse;
-import nova.ticket.application.port.in.*;
+import nova.ticket.application.port.in.EliminarTicket;
+import nova.ticket.application.port.in.ObtenerTicketDetalles;
+import nova.ticket.application.port.in.ObtenerTicketFolio;
+import nova.ticket.application.port.in.ObtenerTickets;
 import nova.ticket.domain.model.Filtro;
 import nova.ticket.domain.model.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +23,7 @@ public class TicketController {
     private final ObtenerTicketDetalles ticketDetalles;
     private final EliminarTicket eliminarTicket;
     @Autowired
-    public TicketController(ObtenerTickets tickets, ObtenerTicketFolio ticketFolio, ObtenerTicketDetalles ticketDetalles, ExisteFolio existeFolio, EliminarTicket eliminarTicket) {
+    public TicketController(ObtenerTickets tickets, ObtenerTicketFolio ticketFolio, ObtenerTicketDetalles ticketDetalles, EliminarTicket eliminarTicket) {
         this.tickets = tickets;
         this.ticketFolio = ticketFolio;
         this.ticketDetalles = ticketDetalles;
