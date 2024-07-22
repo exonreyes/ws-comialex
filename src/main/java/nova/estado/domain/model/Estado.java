@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Estado implements Serializable {
     private Integer id;
     private String nombre;
