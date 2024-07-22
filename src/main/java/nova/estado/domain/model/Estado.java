@@ -10,8 +10,11 @@ import java.io.Serializable;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class Estado implements Serializable {
     private Integer id;
     private String nombre;
+
+    public Estado(Integer id) {
+        this.id = id;
+    }
 }
