@@ -58,11 +58,6 @@ public class TicketController {
 
     @DeleteMapping("ticket")
     public ResponseEntity<NovaResponse> eliminarTicket(@RequestParam("folio") String folio) {
-        if (eliminarTicket.eliminar(folio)) {
-            return ResponseEntity.ok(NovaResponse.builder().message("Ticket eliminado").status(200).build());
-        } else {
-            return ResponseEntity.ok(NovaResponse.builder().message("Ticket eliminado").status(200).build());
-        }
-
+        return ResponseEntity.ok(NovaResponse.builder().data(eliminarTicket.eliminar(folio)).message("Ticket eliminado").status(200).build());
     }
 }
