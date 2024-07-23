@@ -16,30 +16,22 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class TicketPersistenceAdapter implements ObtenerTicketsPort, ObtenerTicketFolioPort, ObtenerDetallesPort, ExisteFolioPort, EliminarTicketPort {
     private final TicketJpaRepository jpaRepository;
-
+    private final TicketMapper mapper;
     @Autowired
-    public TicketPersistenceAdapter(TicketJpaRepository jpaRepository) {
+    public TicketPersistenceAdapter(TicketJpaRepository jpaRepository, TicketMapper mapper) {
         this.jpaRepository = jpaRepository;
+        this.mapper = mapper;
     }
 
     @Override
     public DataPaginado<Ticket> obtenerTickets(Filtro f) {
         Pageable pageable = PageRequest.of(f.getPagina(), f.getFilas(), Sort.by("fecha").descending());
         Page<TicketInfo> pagina = jpaRepository.buscarTickets(f.getIdUnidad(), f.getIdArea(), f.getIdEstado(), f.getDesde(), f.getHasta(), f.getFolio(), pageable);
-        if (pagina.isEmpty()) {
-            System.out.println("Esta vacio");
-        }
-        // Convertir página de TicketInfo a una lista de Ticket usando parallelStream y TicketMapper
-        List<Ticket> tickets = pagina.stream().parallel()
-                .map(TicketMapper::map)
-                .collect(Collectors.toList());
-
-        // Crear objeto Paginador
+        List<Ticket> tickets = mapper.mapTickets(pagina.getContent());
         Paginador p = new Paginador(f.getPagina(), pagina.getNumberOfElements());
         p.setPaginas(pagina.getTotalPages());
         p.setTotalRegistros(pagina.getTotalElements());
@@ -51,14 +43,14 @@ public class TicketPersistenceAdapter implements ObtenerTicketsPort, ObtenerTick
     public Ticket obtenerTicketFolio(String folio) {
         Optional<TicketInfo> ticket = jpaRepository.findByFolioAndVisibleTrue(folio, TicketInfo.class);
         TicketInfo ticketInfo = ticket.get();
-        return TicketMapper.map(ticketInfo);
+        return mapper.mapTicket(ticketInfo);
     }
 
     @Override
     public Ticket obtenerDetalles(String folio) {
         Optional<TicketDetallesInfo> detalles = jpaRepository.findByFolioAndVisibleTrue(folio, TicketDetallesInfo.class);
         TicketDetallesInfo detallesInfo = detalles.get();
-        return TicketMapper.mapDetalles(detallesInfo);
+        return mapper.mapTicketDetalles(detallesInfo);
     }
 
     @Override
