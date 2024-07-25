@@ -36,6 +36,7 @@ public interface TicketJpaRepository extends JpaRepository<TicketEntity, Integer
 
     boolean existsByFolioAndVisibleTrue(String folio);
 
+    boolean existsByFolio(String folio);
     @Transactional
     @Modifying
     @Query("update TicketEntity t set t.visible = false where t.folio = ?1")

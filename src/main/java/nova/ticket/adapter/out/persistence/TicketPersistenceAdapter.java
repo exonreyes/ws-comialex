@@ -2,6 +2,7 @@ package nova.ticket.adapter.out.persistence;
 
 import nova.common.DataPaginado;
 import nova.common.Paginador;
+import nova.ticket.adapter.out.persistence.model.TicketEntity;
 import nova.ticket.adapter.out.persistence.projection.TicketDetallesInfo;
 import nova.ticket.adapter.out.persistence.projection.TicketInfo;
 import nova.ticket.application.port.out.*;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class TicketPersistenceAdapter implements ObtenerTicketsPort, ObtenerTicketFolioPort, ObtenerDetallesPort, ExisteFolioPort, EliminarTicketPort {
+public class TicketPersistenceAdapter implements NuevoTicketPort, ObtenerTicketsPort, ObtenerTicketFolioPort, ObtenerDetallesPort, ExisteFolioPort, EliminarTicketPort {
     private final TicketJpaRepository jpaRepository;
     private final TicketMapper mapper;
     @Autowired
@@ -55,11 +56,17 @@ public class TicketPersistenceAdapter implements ObtenerTicketsPort, ObtenerTick
 
     @Override
     public Boolean existeFolio(String folio) {
-        return jpaRepository.existsByFolioAndVisibleTrue(folio);
+        return jpaRepository.existsByFolio(folio);
     }
 
     @Override
     public boolean eliminarTicket(String folio) {
         return jpaRepository.updateVisibleByFolio(folio) == 1;
+    }
+
+    @Override
+    public Ticket registrar(Ticket ticket) {
+        TicketEntity temp = mapper.mapEntity(ticket);
+        return mapper.mapTicket(jpaRepository.save(temp));
     }
 }
