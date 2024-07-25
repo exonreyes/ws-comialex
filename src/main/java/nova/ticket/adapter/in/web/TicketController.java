@@ -1,11 +1,9 @@
 package nova.ticket.adapter.in.web;
 
+import jakarta.validation.Valid;
 import nova.common.DataPaginado;
 import nova.common.NovaResponse;
-import nova.ticket.application.port.in.EliminarTicket;
-import nova.ticket.application.port.in.ObtenerTicketDetalles;
-import nova.ticket.application.port.in.ObtenerTicketFolio;
-import nova.ticket.application.port.in.ObtenerTickets;
+import nova.ticket.application.port.in.*;
 import nova.ticket.domain.model.Filtro;
 import nova.ticket.domain.model.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +16,14 @@ import java.util.Optional;
 @RestController
 @RequestMapping("ticket")
 public class TicketController {
+    private final NuevoTicket nuevoTicket;
     private final ObtenerTickets tickets;
     private final ObtenerTicketFolio ticketFolio;
     private final ObtenerTicketDetalles ticketDetalles;
     private final EliminarTicket eliminarTicket;
     @Autowired
-    public TicketController(ObtenerTickets tickets, ObtenerTicketFolio ticketFolio, ObtenerTicketDetalles ticketDetalles, EliminarTicket eliminarTicket) {
+    public TicketController(NuevoTicket nuevoTicket, ObtenerTickets tickets, ObtenerTicketFolio ticketFolio, ObtenerTicketDetalles ticketDetalles, EliminarTicket eliminarTicket) {
+        this.nuevoTicket = nuevoTicket;
         this.tickets = tickets;
         this.ticketFolio = ticketFolio;
         this.ticketDetalles = ticketDetalles;
@@ -59,5 +59,10 @@ public class TicketController {
     @DeleteMapping("ticket")
     public ResponseEntity<NovaResponse> eliminarTicket(@RequestParam("folio") String folio) {
         return ResponseEntity.ok(NovaResponse.builder().data(eliminarTicket.eliminar(folio)).message("Ticket eliminado").status(200).build());
+    }
+
+    @PostMapping("ticket")
+    public ResponseEntity<NovaResponse> nuevoTicket(@Valid @RequestBody Ticket ticket) {
+        return ResponseEntity.ok(NovaResponse.builder().data(nuevoTicket.crear(ticket)).status(200).build());
     }
 }
