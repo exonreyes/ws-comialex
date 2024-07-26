@@ -17,14 +17,14 @@ public class EliminarTicketService implements EliminarTicket {
     private ExisteFolioPort verificador;
 
     @Override
-    public boolean eliminar(String folio) {
+    public Boolean execute(String folio) {
         if (verificador.existeFolio(folio)) {
             try {
-                return eliminarTicket.eliminarTicket(folio);
+                return eliminarTicket.eliminar(folio);
             } catch (DataIntegrityViolationException e) {
-                throw new EntityException("No se pudo eliminar el ticket", e.getCause(), HttpStatus.CONFLICT.value());
+                throw new EntityException("No se pudo eliminar el ticket debido a un conflicto de datos", e.getCause(), HttpStatus.CONFLICT.value());
             } catch (Exception e) {
-                throw new EntityException("Error al eliminar el ticket", e.getCause(), HttpStatus.CONFLICT.value());
+                throw new EntityException("Error al eliminar el ticket", e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR.value());
             }
         } else {
             throw new EntityException("El ticket a eliminar no existe", null, HttpStatus.NOT_FOUND.value());

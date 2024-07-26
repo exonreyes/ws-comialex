@@ -3,7 +3,6 @@ package nova.ticket.application.service;
 import nova.common.exception.EntityException;
 import nova.ticket.application.port.in.ExisteFolio;
 import nova.ticket.application.port.in.NuevoTicket;
-import nova.ticket.application.port.in.ObtenerTicketFolio;
 import nova.ticket.application.port.out.NuevoTicketPort;
 import nova.ticket.application.util.DefaultPropertiesTicket;
 import nova.ticket.application.util.FolioGenerador;
@@ -33,11 +32,11 @@ public class NuevoTicketService implements NuevoTicket {
     }
 
     @Override
-    public synchronized Ticket crear(Ticket ticket) {
+    public synchronized Ticket execute(Ticket ticket) {
         if (!validator.isValid(ticket))
             throw new EntityException("Se requiere un ticket a procesar", null, HttpStatus.INTERNAL_SERVER_ERROR.value());
         if (validator.getFolioValidator().isValid(ticket)) {
-            if (existeFolio.verificar(ticket.getFolio())) {
+            if (existeFolio.execute(ticket.getFolio())) {
                 throw new EntityException("El folio " + ticket.getFolio() + " ya se encuentra asignado a otro ticket", null, HttpStatus.CONFLICT.value());
             }
         } else {

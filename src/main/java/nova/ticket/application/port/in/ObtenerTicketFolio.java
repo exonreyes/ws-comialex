@@ -1,7 +1,7 @@
 package nova.ticket.application.port.in;
 
+import nova.common.Executor;
 import nova.ticket.domain.model.Ticket;
 
-public interface ObtenerTicketFolio {
-    Ticket obtener(String folio);
+public interface ObtenerTicketFolio extends Executor<Ticket, String> {
 }

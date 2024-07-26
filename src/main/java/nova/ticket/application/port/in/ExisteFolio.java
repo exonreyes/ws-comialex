@@ -1,5 +1,6 @@
 package nova.ticket.application.port.in;
 
-public interface ExisteFolio {
-    Boolean verificar(String folio);
+import nova.common.Executor;
+
+public interface ExisteFolio extends Executor<Boolean, String> {
 }

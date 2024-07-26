@@ -19,8 +19,8 @@ public class DetallesTicketService implements ObtenerTicketDetalles {
     private ExisteFolio verificador;
 
     @Override
-    public Ticket obtener(String folio) {
-        if (verificador.verificar(folio)) {
+    public Ticket execute(String folio) {
+        if (verificador.execute(folio)) {
             try {
                 return port.obtenerDetalles(folio);
             } catch (NoSuchElementException e) {

@@ -1,5 +1,5 @@
 package nova.ticket.application.port.out;
 
 public interface EliminarTicketPort {
-    boolean eliminarTicket(String folio);
+    Boolean eliminar(String folio);
 }

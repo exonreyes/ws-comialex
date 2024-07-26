@@ -5,5 +5,5 @@ import nova.ticket.domain.model.Filtro;
 import nova.ticket.domain.model.Ticket;
 
 public interface ObtenerTicketsPort {
-    DataPaginado<Ticket> obtenerTickets(Filtro filtro);
+    DataPaginado<Ticket> obtenerGenerales(Filtro filtro);
 }

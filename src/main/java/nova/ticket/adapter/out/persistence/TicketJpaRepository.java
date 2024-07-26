@@ -15,16 +15,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public interface TicketJpaRepository extends JpaRepository<TicketEntity, Integer> {
-    /**
-     * Este método se utiliza para buscar tickets en la base de datos según los parámetros proporcionados.
-     *
-     * @param id_unidad El ID de la unidad para filtrar los tickets. Si es nulo, se devuelven todos los tickets.
-     * @param id_area   El ID del área para filtrar los tickets. Si es nulo, se devuelven todos los tickets.
-     * @param id_estado El ID del estado para filtrar los tickets. Si es nulo, se devuelven todos los tickets.
-     * @param desde     La fecha y hora a partir de la cual se filtran los tickets. Si es nulo, se devuelven todos los tickets.
-     * @param pageable  La información de paginación para el resultado.
-     * @return Una página de objetos TicketInfo que coinciden con los parámetros proporcionados.
-     */
 
     @EntityGraph(attributePaths = {"unidad", "reporte.area", "estado"})
     @Query("select t.id as id,t.fecha as fecha, t.folio as folio,t.unidad.id  as unidadId,t.unidad.clave as unidadClave,t.unidad.nombre as unidadNombre, t.reporte as reporte,t.estado as estado from TicketEntity t where (:id_unidad IS NULL OR t.unidad.id = :id_unidad) and (:id_area IS NULL OR t.reporte.area.id = :id_area) and (:id_estado IS NULL OR t.estado.id = :id_estado) and(:desde IS NULL OR t.fecha >= :desde) and(:hasta IS NULL OR t.fecha <= :hasta) and (:folio IS NULL OR t.folio = :folio)  and t.visible = true")
@@ -34,12 +24,15 @@ public interface TicketJpaRepository extends JpaRepository<TicketEntity, Integer
     <T>
     Optional<T> findByFolioAndVisibleTrue(String folio, Class<T> type);
 
+    @EntityGraph(attributePaths = {"reporte.area"})
+    <T>
+    Optional<T> findByIdAndVisibleTrue(Integer id, Class<T> type);
     boolean existsByFolioAndVisibleTrue(String folio);
 
+    boolean existsByIdAndVisibleTrue(Integer id);
     boolean existsByFolio(String folio);
     @Transactional
     @Modifying
     @Query("update TicketEntity t set t.visible = false where t.folio = ?1")
     int updateVisibleByFolio(String folio);
-
 }
