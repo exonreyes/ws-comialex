@@ -27,7 +27,7 @@ public class SeguimientoEntity {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_estado", nullable = false)
-    private EstadoEntity idEstado;
+    private EstadoEntity estado;
 
     @Size(max = 50)
     @Column(name = "agente", length = 50)
