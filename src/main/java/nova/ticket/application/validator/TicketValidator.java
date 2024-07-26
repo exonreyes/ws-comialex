@@ -12,9 +12,21 @@ public class TicketValidator implements Validator<Boolean, Ticket> {
     private ReporteValidator reporteValidator;
     private AreaValidator areaValidator;
     private NotaValidator notaValidator;
+    private IDValidator idValidator;
+    private UnidadValidator unidadValidator;
     @Override
     public Boolean isValid(Ticket obj) {
         return obj != null;
+    }
+
+    public UnidadValidator getUnidadValidator() {
+        if (unidadValidator == null) unidadValidator = new UnidadValidator();
+        return unidadValidator;
+    }
+
+    public IDValidator getIdValidator() {
+        if (idValidator == null) idValidator = new IDValidator();
+        return idValidator;
     }
 
     public FolioValidator getFolioValidator() {
