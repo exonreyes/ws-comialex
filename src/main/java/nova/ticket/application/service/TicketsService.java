@@ -17,7 +17,7 @@ public class TicketsService implements ObtenerTickets {
     }
 
     @Override
-    public DataPaginado<Ticket> obtener(Filtro filtro) {
-        return port.obtenerTickets(filtro);
+    public DataPaginado<Ticket> execute(Filtro filtro) {
+        return port.obtenerGenerales(filtro);
     }
 }

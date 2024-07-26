@@ -16,10 +16,10 @@ public class TicketFolioService implements ObtenerTicketFolio {
     @Autowired
     private ExisteFolio existeFolio;
     @Override
-    public Ticket obtener(String folio) {
-        if (existeFolio.verificar(folio)) {
+    public Ticket execute(String folio) {
+        if (existeFolio.execute(folio)) {
             try {
-                return port.obtenerTicketFolio(folio);
+                return port.obtenerGenerales(folio);
             } catch (Exception e) {
                 throw new EntityException("Error al obtener el ticket " + folio, e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR.value());
             }

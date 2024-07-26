@@ -11,7 +11,7 @@ public class ExisteFolioService implements ExisteFolio {
     private ExisteFolioPort port;
 
     @Override
-    public Boolean verificar(String folio) {
+    public Boolean execute(String folio) {
         return port.existeFolio(folio);
     }
 }
