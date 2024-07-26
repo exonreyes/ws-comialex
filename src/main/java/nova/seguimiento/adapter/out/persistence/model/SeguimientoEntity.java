@@ -8,7 +8,7 @@ import lombok.Setter;
 import nova.estado.adapter.out.persistence.model.EstadoEntity;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -36,7 +36,7 @@ public class SeguimientoEntity {
     @NotNull
     @ColumnDefault("current_timestamp()")
     @Column(name = "fecha", nullable = false)
-    private Instant fecha;
+    private LocalDateTime fecha;
 
     @Lob
     @Column(name = "nota")
