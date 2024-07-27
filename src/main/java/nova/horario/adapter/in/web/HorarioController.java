@@ -18,6 +18,6 @@ public class HorarioController {
 
     @GetMapping("horarios")
     public ResponseEntity<NovaResponse> obtenerHorarios() {
-        return ResponseEntity.ok(NovaResponse.builder().data(horarios.obtener()).status(200).build());
+        return ResponseEntity.ok(NovaResponse.builder().data(horarios.execute(null)).status(200).build());
     }
 }

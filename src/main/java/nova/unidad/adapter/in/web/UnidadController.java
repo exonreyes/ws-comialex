@@ -29,21 +29,21 @@ public class UnidadController {
 
     @GetMapping("unidades")
     public ResponseEntity<NovaResponse> obtenerUnidades() {
-        return ResponseEntity.ok(NovaResponse.builder().data(unidades.obtener()).status(200).build());
+        return ResponseEntity.ok(NovaResponse.builder().data(unidades.execute(null)).status(200).build());
     }
 
     @GetMapping()
     public ResponseEntity<NovaResponse> obtenerUnidad(@RequestParam("id") Integer id) {
-        return ResponseEntity.ok(NovaResponse.builder().data(unidad.obtenerPorId(id)).build());
+        return ResponseEntity.ok(NovaResponse.builder().data(unidad.execute(id)).build());
     }
 
     @GetMapping("contacto")
     public ResponseEntity<NovaResponse> obtenerContacto(@RequestParam("id") Integer id) {
-        return ResponseEntity.ok(NovaResponse.builder().data(contacto.obtener(id)).status(200).build());
+        return ResponseEntity.ok(NovaResponse.builder().data(contacto.execute(id)).status(200).build());
     }
 
     @GetMapping("horario")
     public ResponseEntity<NovaResponse> obtenerHorario(@RequestParam("id") Integer id) {
-        return ResponseEntity.ok(NovaResponse.builder().data(horario.obtener(id)).status(200).build());
+        return ResponseEntity.ok(NovaResponse.builder().data(horario.execute(id)).status(200).build());
     }
 }

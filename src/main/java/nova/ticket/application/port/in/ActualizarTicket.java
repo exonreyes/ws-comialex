@@ -1,7 +1,7 @@
 package nova.ticket.application.port.in;
 
-import nova.common.Executor;
+import nova.common.UseCase;
 import nova.ticket.domain.model.Ticket;
 
-public interface ActualizarTicket extends Executor<Boolean, Ticket> {
+public interface ActualizarTicket extends UseCase<Boolean, Ticket> {
 }

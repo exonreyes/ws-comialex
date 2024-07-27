@@ -20,6 +20,6 @@ public class EstadoController {
 
     @GetMapping("estados")
     public ResponseEntity<NovaResponse> obtenerEstados() {
-        return ResponseEntity.ok(NovaResponse.builder().data(estados.obtener()).status(200).build());
+        return ResponseEntity.ok(NovaResponse.builder().data(estados.execute(null)).status(200).build());
     }
 }

@@ -1,7 +1,7 @@
 package nova.unidad.application.port.in;
 
+import nova.common.UseCase;
 import nova.unidad.domain.model.Unidad;
 
-public interface ObtenerHorario {
-    Unidad obtener(Integer idUnidad);
+public interface ObtenerHorario extends UseCase<Unidad, Integer> {
 }

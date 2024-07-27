@@ -17,7 +17,7 @@ public class ObtenerUnidadContactoService implements ObtenerContacto {
     }
 
     @Override
-    public Unidad obtener(Integer id) {
+    public Unidad execute(Integer id) {
         Unidad unidad = port.obtenerContacto(id);
         if (!unidad.getContacto().getEstado()) {
             throw new EntityException("No se encontro algun contacto activo, sin embargo la unidad tiene un registro historico inactivo", null, 404);

@@ -18,7 +18,7 @@ public class ObtenerEstadosService implements ObtenerEstados {
     }
 
     @Override
-    public List<Estado> obtener() {
+    public List<Estado> execute(Void params) {
         return port.obtenerEstados();
     }
 }

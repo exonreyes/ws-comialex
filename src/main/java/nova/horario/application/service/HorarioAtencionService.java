@@ -16,7 +16,7 @@ public class HorarioAtencionService implements ObtenerHorarios {
     }
 
     @Override
-    public List<Atencion> obtener() {
+    public List<Atencion> execute(Void params) {
         return port.obtenerHorarios();
     }
 }

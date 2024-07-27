@@ -1,6 +1,6 @@
 package nova.ticket.application.port.in;
 
-import nova.common.Executor;
+import nova.common.UseCase;
 
-public interface ExisteFolio extends Executor<Boolean, String> {
+public interface ExisteFolio extends UseCase<Boolean, String> {
 }
