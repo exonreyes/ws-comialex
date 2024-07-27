@@ -1,6 +1,7 @@
 package nova.seguimiento.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ public class Seguimiento implements Serializable {
     private Integer id;
     private Ticket ticket;
     private String nota;
+    @NotNull(message = "Se requiere un estatus para el seguimiento")
     private Estado estado;
     private String agente;
     private LocalDateTime fecha;
