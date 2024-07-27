@@ -16,7 +16,7 @@ public class ObtenerUnidadIDService implements ObtenerUnidadId {
     }
 
     @Override
-    public Unidad obtenerPorId(Integer id) {
+    public Unidad execute(Integer id) {
         return  port.obtenerUnidadPorId(id);
     }
 }

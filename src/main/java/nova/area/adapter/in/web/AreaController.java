@@ -23,11 +23,11 @@ public class AreaController {
 
     @GetMapping("areas")
     public ResponseEntity<NovaResponse> obtenerAreas() {
-        return ResponseEntity.ok(NovaResponse.builder().data(areas.obtener()).build());
+        return ResponseEntity.ok(NovaResponse.builder().data(areas.execute(null)).build());
     }
 
     @GetMapping("areas/reportes")
     public ResponseEntity<NovaResponse> obtenerAreaConReportes() {
-        return ResponseEntity.ok(NovaResponse.builder().data(reportes.obtener()).build());
+        return ResponseEntity.ok(NovaResponse.builder().data(reportes.execute(null)).build());
     }
 }

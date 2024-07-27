@@ -18,7 +18,7 @@ public class ObtenerUnidadesService implements ObtenerUnidades {
     }
 
     @Override
-    public List<Unidad> obtener() {
+    public List<Unidad> execute(Void unused) {
         return port.obtenerUnidades();
     }
 }

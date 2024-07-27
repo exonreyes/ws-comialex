@@ -1,7 +1,7 @@
 package nova.seguimiento.application.port.in;
 
-import nova.common.Executor;
+import nova.common.UseCase;
 import nova.seguimiento.domain.Seguimiento;
 
-public interface NuevoSeguimiento extends Executor<Boolean, Seguimiento> {
+public interface NuevoSeguimiento extends UseCase<Boolean, Seguimiento> {
 }

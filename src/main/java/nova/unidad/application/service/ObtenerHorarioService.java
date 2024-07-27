@@ -16,7 +16,7 @@ public class ObtenerHorarioService implements ObtenerHorario {
     }
 
     @Override
-    public Unidad obtener(Integer idUnidad) {
+    public Unidad execute(Integer idUnidad) {
         return port.obtenerHorario(idUnidad);
     }
 }

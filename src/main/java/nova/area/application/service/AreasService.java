@@ -18,7 +18,7 @@ public class AreasService implements ObtenerAreas {
     }
 
     @Override
-    public List<Area> obtener() {
+    public List<Area> execute(Void params) {
         return port.obtenerAreas();
     }
 }
