@@ -2,8 +2,8 @@ package nova.ticket.application.service;
 
 import nova.common.exception.EntityException;
 import nova.ticket.application.port.in.ExisteID;
+import nova.ticket.application.port.in.TicketValidator;
 import nova.ticket.application.port.out.ExisteIDPort;
-import nova.ticket.application.validator.TicketValidator;
 import nova.ticket.domain.model.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class ExisteIDService implements ExisteID {
 
     @Override
     public Boolean execute(Ticket t) {
-        if (!validator.getIdValidator().isValid(t))
+        if (!validator.isValid(t) || !validator.isIDValid(t.getId()))
             throw new EntityException("Se debe especificar un ID asociado al ticket", null, HttpStatus.BAD_REQUEST.value());
         return port.existeID(t.getId());
     }
