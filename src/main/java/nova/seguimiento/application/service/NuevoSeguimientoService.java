@@ -8,6 +8,7 @@ import nova.ticket.application.port.in.TicketValidator;
 import nova.ticket.application.util.DefaultPropertiesTicket;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -24,6 +25,7 @@ public class NuevoSeguimientoService implements NuevoSeguimiento {
     }
 
     @Override
+    @Transactional
     public Boolean execute(Seguimiento seguimiento) {
         if (seguimiento == null)
             throw new EntityException("Se requiere un seguimiento a procesar", null, HttpStatus.NO_CONTENT.value());
