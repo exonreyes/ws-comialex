@@ -4,9 +4,9 @@ import nova.common.exception.EntityException;
 import nova.ticket.application.port.in.ActualizarTicket;
 import nova.ticket.application.port.in.ExisteFolio;
 import nova.ticket.application.port.in.ObtenerTicketID;
+import nova.ticket.application.port.in.TicketValidator;
 import nova.ticket.application.port.out.ActualizarTicketPort;
 import nova.ticket.application.util.DefaultPropertiesTicket;
-import nova.ticket.application.validator.TicketValidator;
 import nova.ticket.domain.model.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +34,7 @@ public class ActualizarTicketService implements ActualizarTicket {
         if (!validator.isValid(ticket)) {
             throw new EntityException("Se requiere un ticket a procesar", null, HttpStatus.BAD_REQUEST.value());
         }
-        if (!validator.getIdValidator().isValid(ticket)) {
+        if (!validator.isIDValid(ticket.getId())) {
             throw new EntityException("Se requiere un ID asociado al ticket para actualizar", null, HttpStatus.BAD_REQUEST.value());
         }
 
@@ -49,22 +49,22 @@ public class ActualizarTicketService implements ActualizarTicket {
         }
     }
     private void actualizarAtributos(Ticket ticket, Ticket actual) {
-        if (validator.getFolioValidator().isValid(ticket)) {
+        if (validator.getFolioValidator().isValid(ticket.getFolio())) {
             actual.setFolio(ticket.getFolio());
         }
-        if (validator.getNotaValidator().isValid(ticket) && !actual.getNota().equals(ticket.getNota())) {
+        if (validator.getNotaValidator().isValid(ticket.getNota()) && !actual.getNota().equals(ticket.getNota())) {
             actual.setNota(ticket.getNota());
         }
-        if (validator.getUnidadValidator().isValid(ticket) && !actual.getUnidad().getId().equals(ticket.getUnidad().getId())) {
+        if (validator.getUnidadValidator().isValid(ticket.getUnidad()) && !actual.getUnidad().getId().equals(ticket.getUnidad().getId())) {
             actual.setUnidad(ticket.getUnidad());
         }
-        if (validator.getAgenteValidator().isValid(ticket)) {
+        if (validator.getAgenteValidator().isValid(ticket.getAgente())) {
             actual.setAgente(ticket.getAgente());
         }
-        if (validator.getReporteValidator().isValid(ticket)) {
+        if (validator.getReporteValidator().isValid(ticket.getReporte())) {
             actual.setReporte(ticket.getReporte());
         }
-        if (validator.getEstadoValidator().isValid(ticket)) {
+        if (validator.getEstadoValidator().isValid(ticket.getEstado())) {
             actual.setEstado(ticket.getEstado());
         }
     }
