@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Seguimiento implements Serializable {
     private Integer id;
+    @NotNull(message = "Se requieire un ticket asociado al seguimiento")
     private Ticket ticket;
     private String nota;
     @NotNull(message = "Se requiere un estatus para el seguimiento")
