@@ -11,6 +11,7 @@ import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface SeguimientoMapper {
+    @Mapping(source = "ticket.id", target = "idTicket")
     SeguimientoEntity mapSeguimiento(Seguimiento seguimiento);
 
     @Mapping(source = "estado", target = "estado")

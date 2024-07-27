@@ -1,13 +1,12 @@
 package nova.seguimiento.adapter.in.web;
 
+import jakarta.validation.Valid;
 import nova.common.NovaResponse;
+import nova.seguimiento.application.port.in.NuevoSeguimiento;
 import nova.seguimiento.application.port.in.ObtenerSeguimientos;
 import nova.seguimiento.domain.Seguimiento;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,9 +14,11 @@ import java.util.List;
 @RequestMapping("seguimiento")
 public class SeguimientoController {
     private final ObtenerSeguimientos seguimientos;
+    private final NuevoSeguimiento nuevoSeguimiento;
 
-    public SeguimientoController(ObtenerSeguimientos seguimientos) {
+    public SeguimientoController(ObtenerSeguimientos seguimientos, NuevoSeguimiento nuevoSeguimiento) {
         this.seguimientos = seguimientos;
+        this.nuevoSeguimiento = nuevoSeguimiento;
     }
 
     @GetMapping("seguimientos")
@@ -26,7 +27,14 @@ public class SeguimientoController {
         return ResponseEntity.
                 ok(NovaResponse.builder()
                         .data(data.isEmpty() ? null : data)
-                        .message("Sin resultados").status(200).build());
+                        .message(data.isEmpty() ? "Sin resultados" : null).status(200).build());
 
     }
+
+    @PostMapping("nuevo")
+    public ResponseEntity<NovaResponse> nuevo(@Valid @RequestBody Seguimiento nuevo) {
+        nuevoSeguimiento.execute(nuevo);
+        return ResponseEntity.ok(NovaResponse.builder().message("Seguimiento registrado").status(200).build());
+    }
+
 }
