@@ -26,7 +26,7 @@ public class SeguimientoController {
         return ResponseEntity.
                 ok(NovaResponse.builder()
                         .data(data.isEmpty() ? null : data)
-                        .message("Sin resultados").status(200).build());
+                        .message(data.isEmpty() ? "Sin resultados" : null).status(200).build());
 
     }
 }
